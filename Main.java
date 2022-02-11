@@ -38,24 +38,22 @@ class Main {
     
     for (int i = 0; i < exp.length(); i++) {
       char c = exp.charAt(i);
+      
       if (operaciones.contains(c + "")) {
         if (termino == false) {
-          numero = "";
           colaExpresion.offer(numero);
           termino = true;
+          numero = "";
         }
         colaExpresion.offer(c+"");
-      } else{
-        if (cNumeros.contains(c + "")) {
-          if (termino && ".,".contains(c+"")) {
-            numero += "0";
-          }
-          numero += c;
-          System.out.println(numero+"HH");
-          numero = numero.replaceAll(",",".");
-          termino = false;
+      } else if (cNumeros.contains(c + "")) {
+        if (termino && ".,".contains(c + "")){
+          numero += "0";
         }
-      } 
+        numero += c;
+        numero = numero.replace(',', '.');
+        termino = false;
+      }
     }
     if (termino == false) {
       colaExpresion.offer(numero);
