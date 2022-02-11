@@ -40,12 +40,7 @@ class Main {
       char c = exp.charAt(i);
       
       if (operaciones.contains(c + "")) {
-        if (termino == false) {
-          numero += c;
-          colaExpresion.offer(numero);
-          termino = true;
-          numero = "";
-        }
+        colaExpresion.offer(c+"");
       } else if (cNumeros.contains(c + "")) {
         // if (termino && ".,".contains(c + "")){
         //   numero += "0";
