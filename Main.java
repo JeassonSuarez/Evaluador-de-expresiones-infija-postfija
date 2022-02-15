@@ -9,46 +9,51 @@ class Main {
 
   int valJerarquiaCola;
   int valJerarquiaPila;
-  int x=0;
+  
+  String infija;
 
   public static LinkedList<String> colaExpresion = new LinkedList<>();
   public static LinkedList<String> expPos = new LinkedList<>();
 
   public Main() {
     Scanner n = new Scanner(System.in);
-    separarExpresion(n.nextLine());
+    infija = n.nextLine();
+    System.out.println("La notacion infija es: "+infija);
+    System.out.print("La notacion postfija es: ");
+    separarExpresion(infija);
     Stack<String> pilaOperaciones = new Stack<>();
+    /*Se valida la separacion de la expresion infija en caracteres**/
     // while (!colaExpresion.isEmpty()) {
     //   System.out.println(colaExpresion.poll());
     // }
     while (!colaExpresion.isEmpty()) {
       String elemento = colaExpresion.poll();
-      if(elemento == "%"){
+      if(elemento.equals("%")){
         valJerarquiaCola = 4;
-      }else if (elemento == "p") {
+      }else if (elemento.equals("^")) {
         valJerarquiaCola = 3;
-      }else if (elemento == "*" || elemento == "/") {
+      }else if (elemento.equals("*") || elemento.equals("/")) {
         valJerarquiaCola = 2;
-      }else if (elemento == "+" || elemento == "-") {
+      }else if (elemento.equals("+") || elemento.equals("-")) {
         valJerarquiaCola = 1;
       }
       
-      if ("%p*+-/".contains(elemento)) {
+      if ("^*/+-%".contains(elemento)) {
         if (pilaOperaciones.empty()){
           pilaOperaciones.push(elemento);
         }else{
-          if(pilaOperaciones.peek() == "%"){
+          if(pilaOperaciones.peek().equals("%")){
             valJerarquiaPila = 4;
-          }else if (pilaOperaciones.peek() == "p") {
+          }else if (pilaOperaciones.peek().equals("^")) {
             valJerarquiaPila = 3;
-          }else if (pilaOperaciones.peek() == "*" || elemento == "/") {
+          }else if (pilaOperaciones.peek().equals("*") || elemento.equals("/")) {
             valJerarquiaPila = 2;
-          }else if (pilaOperaciones.peek() == "+" || elemento == "-") {
+          }else if (pilaOperaciones.peek().equals("+") || elemento.equals("-")) {
             valJerarquiaPila = 1;
           }
 
           if (valJerarquiaCola == valJerarquiaPila) {
-            System.out.print(pilaOperaciones.pop() + " = " + elemento);
+            System.out.print(pilaOperaciones.pop());
             pilaOperaciones.push(elemento);
           }
 
@@ -74,19 +79,15 @@ class Main {
           System.out.print(pilaOperaciones.pop());
         }
       }
-      //System.out.println(pilaOperaciones.peek());
-      // else if (elemento.equals(")")) {
-      //   while (pilaOperaciones.peek().equals("(")) {
-      //     expPos.offer(pilaOperaciones.pop());
-      //   }
-      //   pilaOperaciones.pop();
-      // }
+    }
+    while (!pilaOperaciones.empty()) {
+      System.out.print(pilaOperaciones.pop());
     }
   }
 
   public void separarExpresion(String exp) {
     String numero = "";
-    String operaciones = "()+-*/p%";
+    String operaciones = "()+-*/^%";
     String cNumeros = "0123456789.,";
     boolean termino = true;
     
